@@ -1,0 +1,134 @@
+<?php
+
+namespace PodwysockiCMS\AdminBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+
+/**
+ * @ORM\Table(name="categories")
+ * @ORM\Entity()
+ */
+class Category 
+{
+    /**
+     * @ORM\Column(type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    private $id;
+    
+    /**
+     * @ORM\Column(type="string", length=255, unique=true)
+     */
+    private $category_name;
+
+
+    
+    public function __construct()
+    {
+        $this->pages = new ArrayCollection();
+    }
+    
+    /**
+     * Get id
+     *
+     * @return integer
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set categoryName
+     *
+     * @param string $categoryName
+     *
+     * @return Category
+     */
+    public function setCategoryName($categoryName)
+    {
+        $this->category_name = $categoryName;
+
+        return $this;
+    }
+
+    /**
+     * Get categoryName
+     *
+     * @return string
+     */
+    public function getCategoryName()
+    {
+        return $this->category_name;
+    }
+
+    /**
+     * Add product
+     *
+     * @param \PodwysockiCMS\AdminBundle\Entity\Product $product
+     *
+     * @return Category
+     */
+    public function addProduct(\PodwysockiCMS\AdminBundle\Entity\Product $product)
+    {
+        $this->products[] = $product;
+
+        return $this;
+    }
+
+    /**
+     * Remove product
+     *
+     * @param \PodwysockiCMS\AdminBundle\Entity\Product $product
+     */
+    public function removeProduct(\PodwysockiCMS\AdminBundle\Entity\Product $product)
+    {
+        $this->products->removeElement($product);
+    }
+
+    /**
+     * Get products
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getProducts()
+    {
+        return $this->products;
+    }
+
+    /**
+     * Add page
+     *
+     * @param \PodwysockiCMS\AdminBundle\Entity\Page $page
+     *
+     * @return Category
+     */
+    public function addPage(\PodwysockiCMS\AdminBundle\Entity\Page $page)
+    {
+        $this->pages[] = $page;
+
+        return $this;
+    }
+
+    /**
+     * Remove page
+     *
+     * @param \PodwysockiCMS\AdminBundle\Entity\Page $page
+     */
+    public function removePage(\PodwysockiCMS\AdminBundle\Entity\Page $page)
+    {
+        $this->pages->removeElement($page);
+    }
+
+    /**
+     * Get pages
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getPages()
+    {
+        return $this->pages;
+    }
+}

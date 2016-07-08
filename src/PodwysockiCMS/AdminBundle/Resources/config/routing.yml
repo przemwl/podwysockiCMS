@@ -1,0 +1,26 @@
+admin_homepage:
+    path:     /admin
+    defaults: { _controller: AdminBundle:AdminDashobardMain:DashboardMain }
+
+admin_homepage_login:
+    path:     /login
+    defaults: { _controller: AdminBundle:AdminDashobardMain:login }
+
+admin_homepage_logout:
+    path:     /logout
+
+admin_pages:
+    path:     /admin/pages
+    defaults: { _controller: AdminBundle:AdminDashobardPages:index }
+
+admin_pages_add_new:
+    path:     /admin/pages/add-new
+    defaults: { _controller: AdminBundle:AdminDashobardPages:addNewPage }
+
+admin_pages_edit:
+    path:     /admin/pages/edit/{pageID}
+    defaults: { _controller: AdminBundle:AdminDashobardPages:editPage }
+
+admin_pages_remove:
+    path:     /admin/pages/remove/{pageID}
+    defaults: { _controller: AdminBundle:AdminDashobardPages:removePage }

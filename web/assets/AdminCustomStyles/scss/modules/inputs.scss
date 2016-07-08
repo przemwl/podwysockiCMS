@@ -1,0 +1,28 @@
+.field-substitution {
+    .disappearing-field {
+        a {
+            margin: 5px 10px;
+        }
+    }
+    
+    .editing-field {
+        display: none;
+        
+        input {
+            font-size: 21px;
+            font-family: "Arial";
+            color: #425A73;
+            font-weight: 400; 
+        }
+    }
+}
+
+.page-link {
+    .field-substitution {
+        background: #F7F7F7;
+        
+        span.link {
+            color: #09B197;
+        }
+    }
+}

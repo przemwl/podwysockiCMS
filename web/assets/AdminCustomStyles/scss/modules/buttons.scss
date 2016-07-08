@@ -1,0 +1,48 @@
+.btn {
+    &.btn-transparent {
+        border: 1px solid #969696;
+        color: #7B7777;
+        text-decoration: underline;
+        padding: 5px 10px;
+    }
+    
+    &.icon-inside {
+        &:before {
+            font-family: 'FontAwesome';
+            font-size: 14px;
+            padding-right: 10px;
+        }
+        
+        &.icon-trash {
+            &:before {
+                content: '';
+            }
+        }
+        
+        &.icon-plus {
+            &:before {
+                content: '';
+            }
+        }
+        
+        &.icon-refresh {
+            &:before {
+                content: '';
+            }
+        }
+        
+        &.icon-eye {
+            &:before {
+                content: '';
+                display: inherit;
+                text-decoration: none;
+            }
+        }
+        
+        &.icon-accept {
+            &:before {
+                content: '';
+            }
+        }
+    }
+}
