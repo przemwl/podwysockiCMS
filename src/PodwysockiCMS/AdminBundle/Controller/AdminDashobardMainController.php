@@ -9,14 +9,12 @@ use Symfony\Component\HttpFoundation\Request;
 class AdminDashobardMainController extends Controller
 {
     public function DashboardMainAction()
-    { 
-       $user = $this->get('security.token_storage')->getToken()->getUser();
-//     $avatarSrc = $user->getAvatarSrc();
-       $username = $user->getUsername();
-//        
+    {   
+        $user = $this->get('security.token_storage')->getToken()->getUser();
+        $username = $user->getUsername();
+        
         return $this->render('AdminBundle:AdminDashobard:dashboard-pages/main.html.twig',array(
             'username' => $username
-//            'avatarSrc' =>  $avatarSrc
         ));
     }
     

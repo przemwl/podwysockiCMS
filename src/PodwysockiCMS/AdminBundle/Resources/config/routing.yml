@@ -24,3 +24,15 @@ admin_pages_edit:
 admin_pages_remove:
     path:     /admin/pages/remove/{pageID}
     defaults: { _controller: AdminBundle:AdminDashobardPages:removePage }
+
+admin_pages_duplicate:
+    path:     /admin/pages/duplicate/{pageID}
+    defaults: { _controller: AdminBundle:AdminDashobardPages:duplicatePage }
+
+admin_pages_bulk_action:
+    path:     /admin/pages/bulkAction
+    defaults: { _controller: AdminBundle:AdminDashobardPages:bulk }
+
+admin_categories:
+    path:     /admin/categories
+    defaults: { _controller: AdminBundle:AdminDashboardCategory:index }

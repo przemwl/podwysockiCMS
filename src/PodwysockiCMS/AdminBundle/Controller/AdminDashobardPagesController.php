@@ -19,7 +19,7 @@ class AdminDashobardPagesController extends Controller
             ->findAll();
         
         
-        return $this->render('AdminBundle:AdminDashobard:dashboard-pages/pages-list.html.twig',array(
+        return $this->render('AdminBundle:AdminDashobard:dashboard-pages/page-list.html.twig',array(
             'pages' => $pages
                 ));
     }
@@ -131,6 +131,108 @@ class AdminDashobardPagesController extends Controller
         
         return $this->redirectToRoute('admin_pages');
     }
+    
+    public function duplicatePageAction($pageID)
+    {
+        $pageToDuplicate =  $this->get('doctrine')
+            ->getRepository('AdminBundle:Pages')
+            ->find($pageID);
+
+        $pageToDuplicate->setPageTitle( $pageToDuplicate->getPageTitle() . ' ( copy ) ');
+        $pageToDuplicate->setLink($pageToDuplicate->getLink() . '-copy');
+
+
+        $em = $this->getDoctrine()->getManager();
+        $em->detach($pageToDuplicate);
+        $em->persist($pageToDuplicate);
+        $em->flush();
+
+        return $this->redirectToRoute('admin_pages');
+    }
+    
+    
+    public function bulkAction(Request $request)    
+    {
+        $action = $request->request->get('action');
+        $bulkIDs = $request->request->get('bulkIDs');
+        
+        switch($action) {
+            case 'delete':
+               $this->bulkDelete($bulkIDs);
+               break;
+            case 'duplicate':
+               $this->bulkDuplicate($bulkIDs);
+               break;
+            default:
+                throw new \Exception('We didn\'t get any action');
+        }    
+        
+        return $this->redirectToRoute('admin_pages');
+    }
+    
+    
+    public function bulkDelete($bulkIDs)
+    {
+        foreach($bulkIDs as $pageID) {
+            $page =  $this->get('doctrine')
+                ->getRepository('AdminBundle:Pages')
+                ->find($pageID);
             
+            $em = $this->getDoctrine()->getManager();
+            $em->remove($page);
+            $em->flush();
+        }
+        
+         $this->addFlash(
+                'notice',
+                'Wybrane strony zostały usuniętę!'
+               );
+    }
+    
+    public function bulkDuplicate($bulkIDs)
+    {
+        foreach($bulkIDs as $pageID) {
+            
+            $pageRepo = $this->get('doctrine') 
+               ->getRepository('AdminBundle:Pages');
+            $pageToDuplicate =  $pageRepo->find($pageID);
+            
+            $newTitle = $this->findUnique('AdminBundle:Pages', 'PageTitle', 'pageTitle',$pageID);
+            $newLink = $this->findUnique('AdminBundle:Pages', 'Link', 'link',$pageID);
+            
+            $pageToDuplicate->setPageTitle($newTitle);
+            $LinkValidator = new LinkValidator($newLink);
+            $pageToDuplicate->setLink($LinkValidator->getLink());
+            
+            
+            $em = $this->getDoctrine()->getManager();
+            $em->detach($pageToDuplicate);
+            $em->persist($pageToDuplicate);
+            $em->flush();
+            
+        }
+    }
+    
+    public function findUnique($repository,$string,$propertyName,$pageID)
+    {
+        $Repo = $this->get('doctrine')
+                ->getRepository($repository);
+        
+        $toDuplicate =  $Repo->find($pageID);
+        
+        $methodName = 'get' . $string;
+        $newString =  $toDuplicate->$methodName()  . '-copy';
+        
+        $theSameString = $Repo->findBy(array(
+                        $propertyName =>  $newString
+                    ));
+        while (!empty($theSameString)) {
+            $newString .=  '-copy';
+            $theSameString = $Repo->findBy(array(
+                        $propertyName =>  $newString
+                    ));
+        }
+        return $newString;
+    }
     
 }
