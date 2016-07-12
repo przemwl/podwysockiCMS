@@ -28,8 +28,19 @@ class Categories
      */
     private $categoryName;
 
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="published", type="datetime", nullable=false)
+     */
+    private $published;
 
-
+    public function __construct()
+    {
+        $this->published = new \DateTime('now');
+    }
+    
+    
     /**
      * Get id
      *
@@ -62,5 +73,29 @@ class Categories
     public function getCategoryName()
     {
         return $this->categoryName;
+    }
+
+    /**
+     * Set published
+     *
+     * @param \DateTime $published
+     *
+     * @return Categories
+     */
+    public function setPublished($published)
+    {
+        $this->published = $published;
+
+        return $this;
+    }
+
+    /**
+     * Get published
+     *
+     * @return \DateTime
+     */
+    public function getPublished()
+    {
+        return $this->published;
     }
 }

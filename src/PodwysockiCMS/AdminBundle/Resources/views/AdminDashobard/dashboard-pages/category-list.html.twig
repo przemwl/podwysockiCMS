@@ -1,0 +1,134 @@
+{% extends 'AdminBundle:AdminDashobard:dashboard-nav/leftNavigation.html.twig' %}
+
+{% block pageTitle %} Panel sterowania - kategorie {% endblock %}
+
+{% block bodyClass %} nav-md {% endblock %}
+  {% block container %}
+        
+       <div class="container body">
+          <div class="main_container">
+            <div class="col-md-3 left_col">
+                {% block leftNavigation %}{{ parent() }}{% endblock %}
+            </div>
+            <!-- top navigation -->
+            <div class="top_nav">
+              {% block topNavigation %}{{ parent() }}{% endblock %}
+            </div>
+            <!-- /top navigation -->
+
+            <!-- page content -->
+            <div class="right_col" role="main">
+                <div class="row">
+                    <div class="col-md-12 col-sm-12 col-xs-12">
+                        <h1 style="font-weight: bold;"> Twoje Kategorie </h1>
+                    </div>
+                </div>
+                
+                <div class="row">
+                    <div class="col-md-12 col-sm-12 col-xs-12">
+                        
+                        <div class="panel">
+                            {% for flash_message in app.session.flashBag.get('notice') %}
+                                <div class="flash-notice">
+                                    {{ flash_message }}
+                                </div>
+                            {% endfor %}
+                            <div class="row">
+                                <div class="pull-right col-md-12 col-sm-12 col-xs-12">
+                                    <p class="text-right">
+                                        <a href="{{ path('admin_pages_add_new') }}" class="btn btn-success icon-inside icon-plus"> Nowa kategoria </a>
+                                    </p>
+                                </div>
+                            </div>
+                            <form action="{{ path('admin_pages_bulk_action') }}" method="POST">
+                                
+                                <div class="bulk actions">
+                                    <ul class="stats-overview">
+                                        <li> Liczba zaznaczonych kategorii : <br/> <strong class="selected-pages-counter"> 0 </strong> </li>
+                                        <li> 
+                                            <div class="btn-group">
+                                              <div class="form-group">
+                                                  <select class="form-control" name="action" required>
+                                                    <option value=""> Wybierz działanie masowe</option>
+                                                    <option value="delete"> Usuń zaznaczone </option>
+                                                    <option value="duplicate"> Duplikuj zaznaczone </option>
+                                                  </select>
+                                              </div>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <div class="btn-group">
+                                                <input type="submit" value="Wykonaj działania masowe" class="btn btn-primary" />
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="table-responsive">
+                                        <table class="table table-striped jambo_table bulk_action">
+                                          <thead>
+                                            <tr class="headings">
+                                              <th class="column-title" style="display: table-cell;"> ID kategorii </th>
+                                              <th class="column-title" style="display: table-cell;"> Akcje masowe </th>
+                                              <th class="column-title" style="display: table-cell;"> Nazwa kategorii </th>
+                                              <th class="column-title" style="display: table-cell;"> URL kategorii </th>
+                                              <th class="column-title" style="display: table-cell;"> Data utworzenia </th>
+                                              <th class="column-title" style="display: table-cell;"> Zawiera </th>
+                                              <th class="column-title" style="display: table-cell;"> Akcje </th>
+                                            </tr>
+                                          </thead>
+
+                                          <tbody>
+
+                                            {% if categories is empty %} 
+                                                <tr>
+                                                    <td> Na razie nie ma jeszcze dodanych żadnych kategorii... </td>
+                                                </tr>
+                                            {% endif %}
+
+
+                                            {% set counter = 1 %}
+                                            {% for category in categories %}
+
+                                                <tr class="{% if counter is odd %} odd {% else %} even {% endif %} pointer">
+
+                                                    <td> {{ category.id }} </td>
+                                                    <td> <input type="checkbox" name="bulkIDs[]" value="{{ category.id }}"/> </td>
+{#                                                    {{ path('admin_pages_edit', { 'pageID': page.id }) }}#}
+                                                    <td> <h4 style="font-weight: bold"> <a href=""> {{ category.categoryName}} </a> </h4> </td>
+                                                    <td>   {{ app.request.getSchemeAndHttpHost() }}/<strong>{{ category.categoryName}} </strong> </td>
+                                                    <td> {{ category.published | date('Y-m-d') }} </td>
+                                                    <td> Zawarte strony </td>
+                                                    <td class="last">
+                                                        {#<a href="{{ path('admin_pages_edit', { 'pageID': page.id }) }}" class="btn btn-success"> Zarządzaj kategorią </a>
+                                                        <a href="{{ path('admin_pages_remove', { 'pageID': page.id }) }}" class="btn btn-danger"> Usuń </a>#}
+                                                    </td>
+
+                                                </tr>
+                                             {% set counter = counter + 1 %} 
+                                            {% endfor %} 
+
+
+                                            </tr>
+                                          </tbody>
+                                        </table>
+                                  </div>
+                            </form>
+                            
+                        </div>
+                        
+                    </div> <!-- /.col-md-12.col-sm-12.col-xs-12 -->
+                </div> <!-- /.row -->
+            </div>
+            <!-- /page content -->
+            <!-- footer content -->
+            <footer>
+              <div class="pull-right">
+                Created By <a href="https://podwysockidesign.pl"> PodwysockiDESIGN </a>
+              </div>
+              <div class="clearfix"></div>
+            </footer>
+            <!-- /footer content -->
+          </div>
+        </div>
+
+    {% endblock %}
