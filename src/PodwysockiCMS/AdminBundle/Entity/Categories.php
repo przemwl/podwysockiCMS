@@ -3,7 +3,7 @@
 namespace PodwysockiCMS\AdminBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-
+use PodwysockiCMS\AdminBundle\Helpers\LinkValidator;
 /**
  * Categories
  *
@@ -27,7 +27,21 @@ class Categories
      * @ORM\Column(name="category_name", type="string", length=255, nullable=false)
      */
     private $categoryName;
+    
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="link", type="string", length=255, nullable=false)
+     */
+    private $link;
 
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="category_description", type="string", length=255, nullable=false)
+     */
+    private $categoryDescription;
+    
     /**
      * @var string
      *
@@ -97,5 +111,58 @@ class Categories
     public function getPublished()
     {
         return $this->published;
+    }
+
+    /**
+     * Set link
+     *
+     * @param string $link
+     *
+     * @return Categories
+     */
+    public function setLink($link)
+    {
+        if(empty($link) || $link == null) {
+            $link = $this->categoryName;
+        }
+        
+        $LinkValidator = new LinkValidator($link);
+        $this->link = $LinkValidator->getLink();
+        
+        return $this;
+    }
+
+    /**
+     * Get link
+     *
+     * @return string
+     */
+    public function getLink()
+    {
+        return $this->link;
+    }
+
+    /**
+     * Set categoryDescription
+     *
+     * @param string $categoryDescription
+     *
+     * @return Categories
+     */
+    public function setCategoryDescription($categoryDescription)
+    {
+        $this->categoryDescription = $categoryDescription;
+
+        return $this;
+    }
+
+    /**
+     * Get categoryDescription
+     *
+     * @return string
+     */
+    public function getCategoryDescription()
+    {
+        return $this->categoryDescription;
     }
 }

@@ -12,9 +12,6 @@ use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 
-
-
-
 class NewPageForm extends AbstractType
 {
     
@@ -47,9 +44,7 @@ class NewPageForm extends AbstractType
             ->add('published', DateTimeType::class,array(
                 'mapped' => false
             ))
-            ->add('zapisz', SubmitType::class)
-        ;
-        //var_dump();
+            ->add('zapisz', SubmitType::class);
     }
     
     public function configureOptions(OptionsResolver $resolver)

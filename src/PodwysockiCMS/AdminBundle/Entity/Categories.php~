@@ -27,7 +27,21 @@ class Categories
      * @ORM\Column(name="category_name", type="string", length=255, nullable=false)
      */
     private $categoryName;
+    
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="link", type="string", length=255, nullable=false)
+     */
+    private $link;
 
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="category_description", type="string", length=255, nullable=false)
+     */
+    private $categoryDescription;
+    
     /**
      * @var string
      *
@@ -73,5 +87,29 @@ class Categories
     public function getCategoryName()
     {
         return $this->categoryName;
+    }
+
+    /**
+     * Set published
+     *
+     * @param \DateTime $published
+     *
+     * @return Categories
+     */
+    public function setPublished($published)
+    {
+        $this->published = $published;
+
+        return $this;
+    }
+
+    /**
+     * Get published
+     *
+     * @return \DateTime
+     */
+    public function getPublished()
+    {
+        return $this->published;
     }
 }

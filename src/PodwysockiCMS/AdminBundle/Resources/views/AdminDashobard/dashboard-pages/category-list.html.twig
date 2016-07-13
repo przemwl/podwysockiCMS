@@ -36,7 +36,7 @@
                             <div class="row">
                                 <div class="pull-right col-md-12 col-sm-12 col-xs-12">
                                     <p class="text-right">
-                                        <a href="{{ path('admin_pages_add_new') }}" class="btn btn-success icon-inside icon-plus"> Nowa kategoria </a>
+                                        <a href="{{ path('admin_categories_add_new') }}" class="btn btn-success icon-inside icon-plus"> Nowa kategoria </a>
                                     </p>
                                 </div>
                             </div>
@@ -97,10 +97,21 @@
                                                     <td> <h4 style="font-weight: bold"> <a href=""> {{ category.categoryName}} </a> </h4> </td>
                                                     <td>   {{ app.request.getSchemeAndHttpHost() }}/<strong>{{ category.categoryName}} </strong> </td>
                                                     <td> {{ category.published | date('Y-m-d') }} </td>
-                                                    <td> Zawarte strony </td>
+                                                    <td>
+                                                        {% set lastPage = category.innerPages|last %} 
+                                                        {% for page in category.innerPages %} 
+                                                            <a href="{{ path('admin_pages_edit', { 'pageID' : page.pageID }) }}"> 
+                                                                <strong>{{ page.pageTitle }}
+                                                                    {% if page.pageTitle != lastPage.pageTitle %}
+                                                                       ,
+                                                                    {% endif %}
+                                                                </strong> 
+                                                            </a>
+                                                        {% endfor %}
+                                                    </td>
                                                     <td class="last">
-                                                        {#<a href="{{ path('admin_pages_edit', { 'pageID': page.id }) }}" class="btn btn-success"> Zarządzaj kategorią </a>
-                                                        <a href="{{ path('admin_pages_remove', { 'pageID': page.id }) }}" class="btn btn-danger"> Usuń </a>#}
+                                                        <a href="{{ path('admin_categories_edit', { 'categoryID': category.id }) }}" class="btn btn-success"> Zarządzaj kategorią </a>
+                                                        <a href="{{ path('admin_categories_remove', { 'categoryID': category.id }) }}" class="btn btn-danger"> Usuń </a>
                                                     </td>
 
                                                 </tr>

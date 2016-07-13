@@ -36,3 +36,15 @@ admin_pages_bulk_action:
 admin_categories:
     path:     /admin/categories
     defaults: { _controller: AdminBundle:AdminDashboardCategory:index }
+
+admin_categories_add_new:
+    path:     /admin/categories/add-new
+    defaults: { _controller: AdminBundle:AdminDashboardCategory:addNew }
+
+admin_categories_edit:
+    path:     /admin/categories/edit/{categoryID}
+    defaults: { _controller: AdminBundle:AdminDashboardCategory:edit }
+
+admin_categories_remove:
+    path:     /admin/categories/remove/{categoryID}
+    defaults: { _controller: AdminBundle:AdminDashboardCategory:remove }

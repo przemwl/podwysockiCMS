@@ -90,12 +90,34 @@ class AdminDashobardPagesController extends Controller
             ->getRepository('AdminBundle:Pages')
             ->find($pageID);
         
+        $categories = $pages =  $this->get('doctrine')
+            ->getRepository('AdminBundle:Categories')
+            ->findAll();
+        
+        
+        $em = $this->getDoctrine()->getManager();
+        $qb = $em->createQueryBuilder();
+        
+        $query = $em->createQuery("SELECT u FROM AdminBundle:TermsRelations u WHERE u.termOrder=$pageID");
+        $terms_relations = $query->getResult();
+        
+        $page->innerCategories = array_map(function($term){
+           return array(
+               'categoryID'     => $term->getTerm()->getID(),
+               'categoryName'   => $term->getTerm()->getCategoryName()
+           );
+           
+        },$terms_relations);
+        
+        
         $form = $this->createForm(NewPageForm::class, $page);
         
         $form->handleRequest($request);
         
+        
         if ($form->isSubmitted() && $form->isValid()) {
             
+            var_dump($request->request);die();
             $this->addFlash(
                 'notice',
                 'Zmiany zostały zapisane!'
@@ -110,7 +132,8 @@ class AdminDashobardPagesController extends Controller
         
         return $this->render('AdminBundle:AdminDashobard:dashboard-pages/page-single.html.twig', array(
             'form' => $form->createView(),
-            'page' => $page 
+            'page' => $page,
+            'categories' => $categories
         ));
     }
     
