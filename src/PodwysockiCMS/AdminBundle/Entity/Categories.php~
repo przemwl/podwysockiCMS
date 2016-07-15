@@ -3,12 +3,12 @@
 namespace PodwysockiCMS\AdminBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-
+use PodwysockiCMS\AdminBundle\Helpers\LinkValidator;
 /**
  * Categories
  *
  * @ORM\Table(name="categories", uniqueConstraints={@ORM\UniqueConstraint(name="UNIQ_3AF34668D5B80441", columns={"category_name"})})
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="PodwysockiCMS\AdminBundle\Entity\CategoriesRepository")
  */
 class Categories
 {
@@ -111,5 +111,58 @@ class Categories
     public function getPublished()
     {
         return $this->published;
+    }
+
+    /**
+     * Set link
+     *
+     * @param string $link
+     *
+     * @return Categories
+     */
+    public function setLink($link)
+    {
+        if(empty($link) || $link == null) {
+            $link = $this->categoryName;
+        }
+        
+        $LinkValidator = new LinkValidator($link);
+        $this->link = $LinkValidator->getLink();
+        
+        return $this;
+    }
+
+    /**
+     * Get link
+     *
+     * @return string
+     */
+    public function getLink()
+    {
+        return $this->link;
+    }
+
+    /**
+     * Set categoryDescription
+     *
+     * @param string $categoryDescription
+     *
+     * @return Categories
+     */
+    public function setCategoryDescription($categoryDescription)
+    {
+        $this->categoryDescription = $categoryDescription;
+
+        return $this;
+    }
+
+    /**
+     * Get categoryDescription
+     *
+     * @return string
+     */
+    public function getCategoryDescription()
+    {
+        return $this->categoryDescription;
     }
 }

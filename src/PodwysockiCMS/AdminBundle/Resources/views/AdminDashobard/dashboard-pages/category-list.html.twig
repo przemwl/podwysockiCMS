@@ -95,7 +95,7 @@
                                                     <td> <input type="checkbox" name="bulkIDs[]" value="{{ category.id }}"/> </td>
 {#                                                    {{ path('admin_pages_edit', { 'pageID': page.id }) }}#}
                                                     <td> <h4 style="font-weight: bold"> <a href=""> {{ category.categoryName}} </a> </h4> </td>
-                                                    <td>   {{ app.request.getSchemeAndHttpHost() }}/<strong>{{ category.categoryName}} </strong> </td>
+                                                    <td>   {{ app.request.getSchemeAndHttpHost() }}/<strong>{{ category.link}} </strong> </td>
                                                     <td> {{ category.published | date('Y-m-d') }} </td>
                                                     <td>
                                                         {% set lastPage = category.innerPages|last %} 

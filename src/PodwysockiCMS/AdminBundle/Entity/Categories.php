@@ -8,7 +8,7 @@ use PodwysockiCMS\AdminBundle\Helpers\LinkValidator;
  * Categories
  *
  * @ORM\Table(name="categories", uniqueConstraints={@ORM\UniqueConstraint(name="UNIQ_3AF34668D5B80441", columns={"category_name"})})
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="PodwysockiCMS\AdminBundle\Entity\CategoriesRepository")
  */
 class Categories
 {

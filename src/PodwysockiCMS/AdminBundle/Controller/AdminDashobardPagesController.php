@@ -85,29 +85,12 @@ class AdminDashobardPagesController extends Controller
     
     public function editPageAction(Request $request, $pageID)
     {
-        
-        $page =  $this->get('doctrine')
-            ->getRepository('AdminBundle:Pages')
-            ->find($pageID);
-        
-        $categories = $pages =  $this->get('doctrine')
-            ->getRepository('AdminBundle:Categories')
-            ->findAll();
-        
-        
         $em = $this->getDoctrine()->getManager();
-        $qb = $em->createQueryBuilder();
-        
-        $query = $em->createQuery("SELECT u FROM AdminBundle:TermsRelations u WHERE u.termOrder=$pageID");
-        $terms_relations = $query->getResult();
-        
-        $page->innerCategories = array_map(function($term){
-           return array(
-               'categoryID'     => $term->getTerm()->getID(),
-               'categoryName'   => $term->getTerm()->getCategoryName()
-           );
-           
-        },$terms_relations);
+            
+        $pageRepository =  $em->getRepository('AdminBundle:Pages');
+        $page = $pageRepository->find($pageID);
+                
+        $categories = $pageRepository->assignCategories($page);
         
         
         $form = $this->createForm(NewPageForm::class, $page);
@@ -117,13 +100,11 @@ class AdminDashobardPagesController extends Controller
         
         if ($form->isSubmitted() && $form->isValid()) {
             
-            var_dump($request->request);die();
+            //var_dump($request->request->get('new_page_form'));die();
             $this->addFlash(
                 'notice',
                 'Zmiany zostały zapisane!'
             );
-            
-            $em = $this->getDoctrine()->getManager();
             $em->persist($page);
             $em->flush();
             

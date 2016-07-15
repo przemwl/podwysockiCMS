@@ -137,28 +137,27 @@
                         <div class="x_panel tile">
                             <h2> Kategorie <span class="i"> i </span> </h2>
                             <hr><hr>
-                            {% for category in categories %}
+                                {#{% for category in page.categories %}
                                 <div class="checkbox">
                                     <label class="">
-{#                                        {{ dump(category.id) }}#}
-                                        {% set checked = ' ' %}
-                                        {% for pageInCat in page.innerCategories %}
-                                            
-                                            {% if category.id in pageInCat %}
-                                               {% set checked = 'checked' %}
-                                            {% endif %}
+                                      
+                                        {% if category.assigned == true %}
+                                            {% set checked = 'checked' %}
+                                        {% else %}
+                                            {% set checked = '' %}
+                                        {% endif %}
                                         
-                                        {% endfor %} 
-                                        
-                                      <div class="icheckbox_flat-green {{ checked }}" style="position: relative;">
-                                          <input type="checkbox" class="flat" name="assignCategoryID[]" value="{{ category.id }}" {{ checked }}="{{ checked }}" style="position: absolute; opacity: 0;">
-                                          <ins class="iCheck-helper"></ins>
-                                      </div> 
-                                        {{ category.categoryName }}
+                                            <div class="icheckbox_flat-green {{ checked }}" style="position: relative;">
+                                                <input type="checkbox" class="flat" name="assignCategoryID[]" value="{{ category.id }}" {{ checked }}="{{ checked }}" style="position: absolute; opacity: 0;">
+                                                <ins class="iCheck-helper"></ins>
+                                            </div> 
+                                           
+                                    
                                     </label>
+                                     {{ category.categoryName }}    
                                   </div>
-                            {% endfor %}
-                            
+                                {% endfor %}#}
+                                {{ form_widget(form.categories) }}
                             <p> <a href="#" class="btn btn-transparent"> Zarządzaj kategoriami </a> </p>
                         </div>
                     </div>

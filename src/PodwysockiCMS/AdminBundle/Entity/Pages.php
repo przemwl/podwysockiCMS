@@ -12,7 +12,7 @@ use PodwysockiCMS\AdminBundle\Helpers\LinkValidator;
  * Pages
  *
  * @ORM\Table(name="pages")
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="PodwysockiCMS\AdminBundle\Entity\PagesRepository")
  */
 class Pages
 {

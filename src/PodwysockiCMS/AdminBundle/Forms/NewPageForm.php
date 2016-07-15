@@ -14,9 +14,10 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class NewPageForm extends AbstractType
 {
-    
+   
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        
         $builder->add('pageTitle', TextType::class, array(
                 'required' => true,
                 'attr' => array(
@@ -44,6 +45,13 @@ class NewPageForm extends AbstractType
             ->add('published', DateTimeType::class,array(
                 'mapped' => false
             ))
+            ->add('categories', ChoiceType::class, array(
+                   'required' => false,
+                   'mapped' => false,
+                   'expanded' => true,
+                   'multiple' => true,
+                   'choices' => $this->getCategories($options)
+                ))
             ->add('zapisz', SubmitType::class);
     }
     
@@ -55,5 +63,18 @@ class NewPageForm extends AbstractType
             'csrf_field_name' => '_token'
         ));
     }
+    
+    public function getCategories($options)
+    {
+        $page = $options['data'];
+        
+        $choices = array();
+        foreach($page->categories as $category) {
+           $choices = $choices + array($category->getCategoryName()=>$category->getID());
+        }
+     
+        return $choices;
+    }
+    
 }
 
