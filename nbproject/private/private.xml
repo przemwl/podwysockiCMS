@@ -12,19 +12,20 @@
     </editor-bookmarks>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
+            <file>file:/var/www/html/podwysockiCMS/src/PodwysockiCMS/AdminBundle/Entity/Categories.php</file>
             <file>file:/var/www/html/podwysockiCMS/web/assets/AdminCustomStyles/scss/modules/buttons.scss</file>
             <file>file:/var/www/html/podwysockiCMS/src/PodwysockiCMS/AdminBundle/Controller/AdminDashobardPagesController.php</file>
-            <file>file:/var/www/html/podwysockiCMS/src/PodwysockiCMS/AdminBundle/Resources/views/AdminDashobard/dashboard-pages/main.html.twig</file>
             <file>file:/var/www/html/podwysockiCMS/web/assets/AdminCustomScripts/main.js</file>
             <file>file:/var/www/html/podwysockiCMS/src/PodwysockiCMS/AdminBundle/Resources/config/routing.yml</file>
-            <file>file:/var/www/html/podwysockiCMS/src/PodwysockiCMS/AdminBundle/Controller/AdminDashboardCategoryController.php</file>
             <file>file:/var/www/html/podwysockiCMS/src/PodwysockiCMS/AdminBundle/Forms/NewCategoryForm.php</file>
+            <file>file:/var/www/html/podwysockiCMS/src/PodwysockiCMS/AdminBundle/Entity/User.php</file>
             <file>file:/var/www/html/podwysockiCMS/src/PodwysockiCMS/AdminBundle/Resources/views/AdminDashobard/dashboard-pages/page-single.html.twig</file>
+            <file>file:/var/www/html/podwysockiCMS/src/PodwysockiCMS/AdminBundle/Entity/CategoriesRepository.php</file>
             <file>file:/var/www/html/podwysockiCMS/web/assets/AdminCustomStyles/scss/modules/inputs.scss</file>
             <file>file:/var/www/html/podwysockiCMS/web/assets/AdminCustomStyles/scss/bootstrap.scss</file>
-            <file>file:/var/www/html/podwysockiCMS/src/PodwysockiCMS/AdminBundle/Resources/views/AdminDashobard/base.html.twig</file>
-            <file>file:/var/www/html/podwysockiCMS/src/PodwysockiCMS/AdminBundle/Entity/TermsRelations.php</file>
+            <file>file:/var/www/html/podwysockiCMS/src/PodwysockiCMS/AdminBundle/Entity/Pages.php</file>
             <file>file:/var/www/html/podwysockiCMS/src/PodwysockiCMS/AdminBundle/Forms/NewPageForm.php</file>
+            <file>file:/var/www/html/podwysockiCMS/src/PodwysockiCMS/AdminBundle/Entity/PagesRepository.php</file>
         </group>
     </open-files>
 </project-private>

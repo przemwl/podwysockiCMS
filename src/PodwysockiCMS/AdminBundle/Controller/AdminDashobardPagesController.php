@@ -92,15 +92,15 @@ class AdminDashobardPagesController extends Controller
                 
         $categories = $pageRepository->assignCategories($page);
         
-        
         $form = $this->createForm(NewPageForm::class, $page);
         
         $form->handleRequest($request);
         
         
         if ($form->isSubmitted() && $form->isValid()) {
-            
-            //var_dump($request->request->get('new_page_form'));die();
+            $insertCategories = isset($request->request->get('new_page_form')['categories']) 
+                    ? $request->request->get('new_page_form')['categories'] : '' ;
+            $pageRepository->setCategories($page, $insertCategories);
             $this->addFlash(
                 'notice',
                 'Zmiany zostały zapisane!'

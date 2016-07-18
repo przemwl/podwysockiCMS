@@ -26,7 +26,7 @@ class TermsRelations
      * @var \Categories
      *
      * @ORM\ManyToOne(targetEntity="Categories")
-     * @ORM\JoinColumn(name="term_id", referencedColumnName="id",nullable=true, onDelete="SET NULL", unique=true)
+     * @ORM\JoinColumn(name="term_id", referencedColumnName="id",nullable=true, onDelete="SET NULL", unique=false)
      */
     private $term = 1;
 
@@ -34,7 +34,7 @@ class TermsRelations
      * @var \Pages
      *
      * @ORM\ManyToOne(targetEntity="Pages")
-     * @ORM\JoinColumn(name="term_order", referencedColumnName="id",nullable=true, onDelete="SET NULL", unique=true)
+     * @ORM\JoinColumn(name="term_order", referencedColumnName="id",nullable=true, onDelete="SET NULL", unique=false)
      *      
      */
     private $termOrder;
