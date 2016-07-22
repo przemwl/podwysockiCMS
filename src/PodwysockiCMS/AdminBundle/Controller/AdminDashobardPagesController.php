@@ -41,13 +41,12 @@ class AdminDashobardPagesController extends Controller
             ->setPageContent($pageContent)
             ->setLink($link)
             ->setVisibility($visibility);
-                
+ 
                 
         $form = $this->createForm(NewPageForm::class, $page);
         
         $form->handleRequest($request);
         
-        $em = $this->getDoctrine()->getManager();
         
         $checkLinks = $em->getRepository('AdminBundle:Pages')
                 ->findBy(array(
@@ -78,7 +77,8 @@ class AdminDashobardPagesController extends Controller
         
         
         return $this->render('AdminBundle:AdminDashobard:dashboard-pages/page-single.html.twig', array(
-            'form' => $form->createView()
+            'form' => $form->createView(),
+            'pageTitle' => 'Tworzenie nowej strony'
         ));
     }
     
@@ -90,7 +90,7 @@ class AdminDashobardPagesController extends Controller
         $pageRepository =  $em->getRepository('AdminBundle:Pages');
         $page = $pageRepository->find($pageID);
                 
-        $categories = $pageRepository->assignCategories($page);
+        $pageRepository->assignCategories($page);
         
         $form = $this->createForm(NewPageForm::class, $page);
         
@@ -100,6 +100,7 @@ class AdminDashobardPagesController extends Controller
         if ($form->isSubmitted() && $form->isValid()) {
             $insertCategories = isset($request->request->get('new_page_form')['categories']) 
                     ? $request->request->get('new_page_form')['categories'] : '' ;
+            
             $pageRepository->setCategories($page, $insertCategories);
             $this->addFlash(
                 'notice',
@@ -114,7 +115,7 @@ class AdminDashobardPagesController extends Controller
         return $this->render('AdminBundle:AdminDashobard:dashboard-pages/page-single.html.twig', array(
             'form' => $form->createView(),
             'page' => $page,
-            'categories' => $categories
+            'pageTitle' => 'Zarządzanie stroną'
         ));
     }
     
@@ -238,5 +239,5 @@ class AdminDashobardPagesController extends Controller
         }
         return $newString;
     }
-    
+      
 }

@@ -38,7 +38,7 @@ class Categories
     /**
      * @var string
      *
-     * @ORM\Column(name="category_description", type="string", length=255, nullable=false)
+     * @ORM\Column(name="category_description", type="string", length=255, nullable=true)
      */
     private $categoryDescription;
     

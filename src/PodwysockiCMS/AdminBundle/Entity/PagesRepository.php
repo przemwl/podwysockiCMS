@@ -29,10 +29,24 @@ class PagesRepository extends \Doctrine\ORM\EntityRepository
         $page->categories = $categories;
     }
     
-    public function setCategories($page, $categoriesIDs)
+    public function setCategories($page, $postCategoriesIDs)
+    {
+        $assignedCategoriesNumber = $this->countAssignedCategories($page);
+        
+        if(count($postCategoriesIDs) > $assignedCategoriesNumber) {
+            $this->insertTermsRelations($page, $postCategoriesIDs);
+        } 
+        
+        if(count($postCategoriesIDs) < $assignedCategoriesNumber) {
+            $this->deleteTermsRelations($page, $postCategoriesIDs);
+        }
+    }
+    
+    
+    public function insertTermsRelations($page, $postCategoriesIDs)
     {
         $em = $this->getEntityManager();
-        foreach($categoriesIDs as $categoryID) {
+        foreach($postCategoriesIDs as $categoryID) {
             $query = $em->createQuery('SELECT u FROM AdminBundle:TermsRelations u WHERE u.termOrder=' . $page->getID() . 'AND u.term=' . $categoryID);
             $terms_relations = $query->getResult();
             if(empty($terms_relations)) {
@@ -44,6 +58,29 @@ class PagesRepository extends \Doctrine\ORM\EntityRepository
                 $em->flush();
             }
         }
+    }
+    
+    public function deleteTermsRelations($page, $postCategoriesIDs)
+    {
+        throw new \Exception('Deleting categories need to be done.');
+    }
+    
+    public function countAssignedCategories($page)
+    {
+        $assignedCategoriesNumber = 0;
         
+            foreach($page->categories as $category) {
+                
+                if(!isset($category->assigned)) {
+                    break;
+                }
+                
+                if($category->assigned == true) {
+                    $assignedCategoriesNumber++;
+                }
+            }
+         
+        
+        return $assignedCategoriesNumber;
     }
 }

@@ -24,7 +24,9 @@
             <file>file:/var/www/html/podwysockiCMS/web/assets/AdminCustomStyles/scss/modules/inputs.scss</file>
             <file>file:/var/www/html/podwysockiCMS/web/assets/AdminCustomStyles/scss/bootstrap.scss</file>
             <file>file:/var/www/html/podwysockiCMS/src/PodwysockiCMS/AdminBundle/Entity/Pages.php</file>
+            <file>file:/var/www/html/podwysockiCMS/src/PodwysockiCMS/AdminBundle/Resources/views/AdminDashobard/base.html.twig</file>
             <file>file:/var/www/html/podwysockiCMS/src/PodwysockiCMS/AdminBundle/Forms/NewPageForm.php</file>
+            <file>file:/var/www/html/podwysockiCMS/src/PodwysockiCMS/AdminBundle/Entity/TermsRelations.php</file>
             <file>file:/var/www/html/podwysockiCMS/src/PodwysockiCMS/AdminBundle/Entity/PagesRepository.php</file>
         </group>
     </open-files>

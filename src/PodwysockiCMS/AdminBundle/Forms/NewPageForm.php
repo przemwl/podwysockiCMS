@@ -35,7 +35,7 @@ class NewPageForm extends AbstractType
                   'Tak' => 'visible',
                   'Nie' => 'hidden'
                 ),
-                'expanded' => true,
+                'expanded' => false,
                 'required' => true,
                 'multiple' => false
             ))
@@ -48,15 +48,11 @@ class NewPageForm extends AbstractType
             ->add('categories', ChoiceType::class, array(
                    'required' => false,
                    'mapped' => false,
+                   'label' => false,
                    'expanded' => true,
                    'multiple' => true,
                    'choices' => $this->getCategories($options),
-                   'choice_attr' => function($category, $key, $index) {
-                        
-                        return ['checked' => 'checked'];
-                        var_dump($category);die();
-                        
-                   }
+                   'choice_attr' => $this->getActiveCategories($options)
                 ))
             ->add('zapisz', SubmitType::class);
     }
@@ -74,16 +70,29 @@ class NewPageForm extends AbstractType
     {
         $page = $options['data'];
         $choices = array();
+        
         foreach($page->categories as $category) {
             $choices = $choices + array($category->getCategoryName()=>$category->getID());
         }
+ 
         
         return $choices;
     }
     
-    public function getActiveCategories($a)
+    public function getActiveCategories($options)
     {
-        var_dump($a); die();
+        $page = $options['data'];
+        $atts = array();
+        foreach($page->categories as $category) {
+            if(isset($category->assigned) && $category->assigned == true) {
+                $atts[$category->getCategoryName()] = ['checked' => 'checked'];
+            } else {
+                $atts[$category->getCategoryName()] = [];
+            }
+            
+        }
+        
+        return $atts;
     }
     
 }

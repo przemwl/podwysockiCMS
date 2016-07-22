@@ -28,6 +28,22 @@
 
 {% block pageTitle %} Main Dashboard {% endblock %}
 
+
+{% form_theme form _self %}
+
+{%- block choice_widget_expanded -%}
+    <div {{ block('widget_container_attributes') }}>
+    {%- for child in form %}
+        <div>
+            {{- form_widget(child) -}}
+            {{- form_label(child, null, {translation_domain: choice_translation_domain}) -}}
+        </div>
+    {% endfor -%}
+    </div>
+
+{%- endblock choice_widget_expanded -%}
+
+
 {% block bodyClass %} nav-md {% endblock %}
 
     {% block container %}
@@ -138,37 +154,12 @@
                             <h2> Kategorie <span class="i"> i </span> </h2>
                             <hr><hr>
                             
-                                {% for category in page.categories %}
-                                <div class="checkbox">
-                                    <label class="">
-                                      {% if category.assigned is defined %}
-                                          
-                                            {% if category.assigned == true %}
-                                                {% set checked = 'checked' %}
-                                            {% else %}
-                                                {% set checked = '' %}
-                                            {% endif %}
-                                        
-                                        {% else %}
-                                            
-                                            {% set checked = '' %}
-                                        
-                                      {% endif %} 
-                                            <div class="icheckbox_flat-green {{ checked }}" style="position: relative;">
-                                                <input type="checkbox" class="flat" name="new_page_form[categories][]" value="{{ category.id }}" {{ checked }}="{{ checked }}" style="position: absolute; opacity: 0;">
-                                                <ins class="iCheck-helper"></ins>
-                                            </div> 
-                                           
-                                    
-                                    </label>
-                                     {{ category.categoryName }}    
-                                  </div>
-                                {% endfor %}
+                                
                                   {{ form_row(form.categories) }}
                             <p> <a href="#" class="btn btn-transparent"> Zarządzaj kategoriami </a> </p>
                         </div>
                     </div>
-                            
+
                     <div class="col-md-9 col-sm-9 col-xs-9 pull-left">
                         <p class="text-right"> 
                             <a href="#" class="btn btn-transparent icon-inside icon-eye"> Podgląd </a>
@@ -177,7 +168,6 @@
                         </p>
                     </div>
                 </div> <!-- /.row -->
-{#                {{ form_end(form) }}#}
                 {{ form_widget(form._token) }}
                 {{ form_end(form, {'render_rest': false}) }}
             </div>
@@ -248,3 +238,4 @@
         
         
     {% endblock %}
+    
