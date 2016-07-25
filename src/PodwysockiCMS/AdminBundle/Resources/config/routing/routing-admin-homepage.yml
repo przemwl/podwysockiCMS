@@ -1,0 +1,10 @@
+admin_homepage:
+    path:     /admin
+    defaults: { _controller: AdminBundle:AdminDashobardMain:DashboardMain }
+
+admin_homepage_login:
+    path:     /login
+    defaults: { _controller: AdminBundle:AdminDashobardMain:login }
+
+admin_homepage_logout:
+    path:     /logout

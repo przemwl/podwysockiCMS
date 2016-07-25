@@ -7,32 +7,99 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="shortcut icon" href="{{ asset('images/pd-favicon.png') }}">
     {% block stylesheets %}
-        
         <!-- jQuery -->
         <script src="{{ asset('assets/vendor/jQuery/jquery.min.js') }}"> </script>
-
         <link href="{{ asset('assets/vendor/bootstrap/src/bootstrap.min.css') }}" rel="stylesheet">
         <!-- Font Awesome -->
         <link href="{{ asset('assets/vendor/font-awesome/css/font-awesome.min.css') }}" rel="stylesheet">
         <!-- Animate.css -->
         <link href="{{ asset('assets/vendor/animate.css/animate.min.css') }}" rel="stylesheet">
         <!-- iCheck -->
-        <link href="{{ asset('assets/vendor/iCheck/skins/flat/_all.css') }}" rel="stylesheet">
-        
-        
+        <link href="{{ asset('assets/vendor/iCheck/skins/flat/_all.css') }}" rel="stylesheet"> 
         <!-- Custom Theme Style -->
         <link href="{{ asset('assets/vendor/build/custom.min.css') }}" rel="stylesheet">
         <link href="{{ asset('assets/AdminCustomStyles/css/main_styles.min.css') }}" rel="stylesheet">
     {% endblock %}
-    
-    
-    <title> {% block pageTitle %} {% endblock %} </title>
+        <title> {% block pageTitle %} {% endblock %} </title>
     </head>
+    
 <body class="{% block bodyClass %} {% endblock %}">
-   
-    {% block container %} {% endblock %}
+    
+    
+    <div class="container body">
+        <div class="main_container">
+            <div class="col-md-3 left_col">
+                {% include 'AdminBundle:AdminDashobard:dashboard-parts/leftNavigation.html.twig' %}
+            </div>
+            <!-- top navigation -->
+            <div class="top_nav">
+                {% include 'AdminBundle:AdminDashobard:dashboard-parts/topNavigation.html.twig' %}
+            </div>
+            <!-- /top navigation -->   
+            
+            <div class="right_col" role="main">
+                <div class="row">
+                    <div class="col-md-12 col-sm-12 col-xs-12">
+                        <h1 style="font-weight: bold;"> {% block pageHeading %} {% endblock %} </h1>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12 col-sm-12 col-xs-12">
+                        <div class="panel">
+            
+                            {% block container %} {% endblock %}
+                            
+                        </div>
+                    </div>
+                </div>  
+            </div>
+        </div>
+    </div>
+                            
+    {% include 'AdminBundle:AdminDashobard:dashboard-parts/footer.html.twig' %}
+            
+{% block scripts %}  
+<script type="text/javascript" src="{{ asset('assets/AdminCustomScripts/main.js') }}"> </script>
+<!-- Bootstrap -->
+<script src="{{ asset('assets/vendor/bootstrap/src/bootstrap.min.js') }}"></script>
+<!-- FastClick -->
+<script src="{{ asset('assets/vendor/fastclick/lib/fastclick.js') }}"></script>
+<!-- NProgress -->
+<script src="{{ asset('assets/vendor/nprogress/nprogress.js') }}"></script>
+<!-- Chart.js -->
+<script src="{{ asset('assets/vendor/Chart.js/dist/Chart.min.js') }}"></script>
+<!-- gauge.js -->
+<script src="{{ asset('assets/vendor/gauge.js/dist/gauge.min.js') }}"></script> 
+<!-- bootstrap-progressbar -->
+<script src="{{ asset('assets/vendor/bootstrap-progressbar/bootstrap-progressbar.min.js') }}"></script>
+<!-- iCheck -->
+<script src="{{ asset('assets/vendor/iCheck/icheck.min.js') }}"></script>
+<!-- Skycons -->
+<script src="{{ asset('assets/vendor/skycons/skycons.js') }}"></script>
+<!-- Flot -->
+<script src="{{ asset('assets/vendor/Flot/jquery.flot.js') }}"></script>
+<script src="{{ asset('assets/vendor/Flot/jquery.flot.pie.js') }}"></script>
+<script src="{{ asset('assets/vendor/Flot/jquery.flot.time.js') }}"></script>
+<script src="{{ asset('assets/vendor/Flot/jquery.flot.stack.js') }}"></script>
+<script src="{{ asset('assets/vendor/Flot/jquery.flot.resize.js')}}"></script>
+<!-- Flot plugins -->
+<script src="{{ asset('assets/vendor/flot/jquery.flot.orderBars.js') }}"></script>
+<script src="{{ asset('assets/vendor/flot/date.js') }}"></script>
+<script src="{{ asset('assets/vendor/flot/jquery.flot.spline.js') }}"></script>
+<script src="{{ asset('assets/vendor/flot/curvedLines.js') }}"></script>
+<!-- jVectorMap -->
+<script src="{{ asset('assets/vendor/maps/jquery-jvectormap-2.0.3.min.js') }}"></script>
+<!-- bootstrap-daterangepicker -->
+<script src="{{ asset('assets/vendor/moment/moment.min.js') }}"></script>
+<script src="{{ asset('assets/vendor/datepicker/daterangepicker.js') }}"></script>
 
+<!-- Custom Theme Scripts -->
+<script src="{{ asset('assets/vendor/custom/custom.min.js') }}"></script>
 
-    {% block scripts %} {% endblock %}
+    <!-- Flot -->    
+<script src="{{ asset('assets/vendor/maps/jquery-jvectormap-world-mill-en.js') }}"></script>
+<script src="{{ asset('assets/vendor/maps/jquery-jvectormap-us-aea-en.js') }}"></script>
+<script src="{{ asset('assets/vendor/maps/gdp-data.js') }}"></script>
+{% endblock %}
 </body>
 </html>

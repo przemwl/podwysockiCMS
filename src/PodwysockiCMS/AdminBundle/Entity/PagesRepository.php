@@ -29,24 +29,29 @@ class PagesRepository extends \Doctrine\ORM\EntityRepository
         $page->categories = $categories;
     }
     
-    public function setCategories($page, $postCategoriesIDs)
+    public function setCategories($page, $postedCategoriesIDs)
     {
+        if($postedCategoriesIDs == '') {
+            $countPostedCategoriesIDs = 0;
+        } else {
+            $countPostedCategoriesIDs = count($postedCategoriesIDs);
+        }
         $assignedCategoriesNumber = $this->countAssignedCategories($page);
-        
-        if(count($postCategoriesIDs) > $assignedCategoriesNumber) {
-            $this->insertTermsRelations($page, $postCategoriesIDs);
+
+        if($countPostedCategoriesIDs > $assignedCategoriesNumber) {
+            $this->insertTermsRelations($page, $postedCategoriesIDs);
         } 
         
-        if(count($postCategoriesIDs) < $assignedCategoriesNumber) {
-            $this->deleteTermsRelations($page, $postCategoriesIDs);
+        if($countPostedCategoriesIDs < $assignedCategoriesNumber) {
+            $this->deleteTermsRelations($page, $postedCategoriesIDs);
         }
     }
     
     
-    public function insertTermsRelations($page, $postCategoriesIDs)
+    public function insertTermsRelations($page, $postedCategoriesIDs)
     {
         $em = $this->getEntityManager();
-        foreach($postCategoriesIDs as $categoryID) {
+        foreach($postedCategoriesIDs as $categoryID) {
             $query = $em->createQuery('SELECT u FROM AdminBundle:TermsRelations u WHERE u.termOrder=' . $page->getID() . 'AND u.term=' . $categoryID);
             $terms_relations = $query->getResult();
             if(empty($terms_relations)) {
@@ -60,26 +65,40 @@ class PagesRepository extends \Doctrine\ORM\EntityRepository
         }
     }
     
-    public function deleteTermsRelations($page, $postCategoriesIDs)
+    public function deleteTermsRelations($page, $postedCategoriesIDs)
     {
-        throw new \Exception('Deleting categories need to be done.');
+        $em = $this->getEntityManager();
+       
+        if($postedCategoriesIDs == 0) {
+            $q = $em->createQuery('delete from AdminBundle:TermsRelations u where u.termOrder=' . $page->getID());
+            $numDeleted = $q->execute();
+        } else {
+            foreach($page->categories as $category) {
+                if(array_search($category->getID(), $postedCategoriesIDs) === false) {
+                    //var_dump($postedCategoriesIDs);die();
+                    $q = $em->createQuery('delete from AdminBundle:TermsRelations u where u.term=' . $category->getID());
+                    $numDeleted = $q->execute();
+                }
+            }
+        }
     }
     
     public function countAssignedCategories($page)
     {
         $assignedCategoriesNumber = 0;
         
+        if(isset($page->categories)) {
             foreach($page->categories as $category) {
-                
+
                 if(!isset($category->assigned)) {
                     break;
                 }
-                
+
                 if($category->assigned == true) {
                     $assignedCategoriesNumber++;
                 }
             }
-         
+        }
         
         return $assignedCategoriesNumber;
     }

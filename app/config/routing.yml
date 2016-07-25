@@ -1,3 +1,9 @@
 admin:
     resource: "@AdminBundle/Resources/config/routing.yml"
     prefix:   /
+
+main_theme:
+    resource: "@MainThemeBundle/Resources/config/routing.yml"
+    prefix:   /
+
+

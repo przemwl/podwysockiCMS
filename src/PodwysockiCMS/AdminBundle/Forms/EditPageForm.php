@@ -12,7 +12,7 @@ use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 
-class NewPageForm extends AbstractType
+class EditPageForm extends AbstractType
 {
    
     public function buildForm(FormBuilderInterface $builder, array $options)
@@ -85,17 +85,15 @@ class NewPageForm extends AbstractType
         $atts = array();
         
         if (isset($page->categories) ) {
-            
             foreach($page->categories as $category) {
                 if(isset($category->assigned) && $category->assigned == true) {
                     $atts[$category->getCategoryName()] = ['checked' => 'checked'];
                 } else {
                     $atts[$category->getCategoryName()] = [];
                 }
+
             }
-            
         }
-        
         return $atts;
     }
     

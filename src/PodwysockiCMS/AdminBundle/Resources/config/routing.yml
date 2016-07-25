@@ -1,50 +1,8 @@
-admin_homepage:
-    path:     /admin
-    defaults: { _controller: AdminBundle:AdminDashobardMain:DashboardMain }
+admin_homepage_routes:
+    resource: "@AdminBundle/Resources/config/routing/routing-admin-homepage.yml"
+    
+admin_pages_routes:
+    resource: "@AdminBundle/Resources/config/routing/routing-admin-pages.yml"
 
-admin_homepage_login:
-    path:     /login
-    defaults: { _controller: AdminBundle:AdminDashobardMain:login }
-
-admin_homepage_logout:
-    path:     /logout
-
-admin_pages:
-    path:     /admin/pages
-    defaults: { _controller: AdminBundle:AdminDashobardPages:index }
-
-admin_pages_add_new:
-    path:     /admin/pages/add-new
-    defaults: { _controller: AdminBundle:AdminDashobardPages:addNewPage }
-
-admin_pages_edit:
-    path:     /admin/pages/edit/{pageID}
-    defaults: { _controller: AdminBundle:AdminDashobardPages:editPage }
-
-admin_pages_remove:
-    path:     /admin/pages/remove/{pageID}
-    defaults: { _controller: AdminBundle:AdminDashobardPages:removePage }
-
-admin_pages_duplicate:
-    path:     /admin/pages/duplicate/{pageID}
-    defaults: { _controller: AdminBundle:AdminDashobardPages:duplicatePage }
-
-admin_pages_bulk_action:
-    path:     /admin/pages/bulkAction
-    defaults: { _controller: AdminBundle:AdminDashobardPages:bulk }
-
-admin_categories:
-    path:     /admin/categories
-    defaults: { _controller: AdminBundle:AdminDashboardCategory:index }
-
-admin_categories_add_new:
-    path:     /admin/categories/add-new
-    defaults: { _controller: AdminBundle:AdminDashboardCategory:addNew }
-
-admin_categories_edit:
-    path:     /admin/categories/edit/{categoryID}
-    defaults: { _controller: AdminBundle:AdminDashboardCategory:edit }
-
-admin_categories_remove:
-    path:     /admin/categories/remove/{categoryID}
-    defaults: { _controller: AdminBundle:AdminDashboardCategory:remove }
+admin_categories_routes:
+    resource: "@AdminBundle/Resources/config/routing/routing-admin-categories.yml"

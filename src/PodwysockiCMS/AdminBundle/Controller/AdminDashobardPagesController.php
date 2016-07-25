@@ -5,9 +5,10 @@ namespace PodwysockiCMS\AdminBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
-use PodwysockiCMS\AdminBundle\Forms\NewPageForm;
 use PodwysockiCMS\AdminBundle\Entity\Pages;
 use PodwysockiCMS\AdminBundle\Helpers\LinkValidator;
+use PodwysockiCMS\AdminBundle\Forms\NewPageForm;
+use PodwysockiCMS\AdminBundle\Forms\EditPageForm;
 
 
 class AdminDashobardPagesController extends Controller
@@ -29,34 +30,35 @@ class AdminDashobardPagesController extends Controller
 
         $pageTitle = $request->request->get('new_page_form')['pageTitle'];
         $pageContent = $request->request->get('new_page_form')['pageContent'];
+        
         $link = isset($request->request->get('new_page_form')['pageContent']) ? 
                 $request->request->get('new_page_form')['pageContent'] : '';
+        
         $visibility = isset($request->request->get('new_page_form')['visibility']) ? 
                 $request->request->get('new_page_form')['pageContent'] : 'visible';
-       
         
         $page = new Pages();
-        
         $page->setPageTitle($pageTitle)
             ->setPageContent($pageContent)
             ->setLink($link)
             ->setVisibility($visibility);
- 
-                
+  
+        $em = $this->getDoctrine()->getManager();
+        $page->categories = $em->getRepository('AdminBundle:Categories')->findAll();
+        
         $form = $this->createForm(NewPageForm::class, $page);
-        
         $form->handleRequest($request);
-        
-        
         $checkLinks = $em->getRepository('AdminBundle:Pages')
                 ->findBy(array(
                     'link' => $page->getLink()
                 ));
         
         if ($form->isSubmitted() && $form->isValid() && empty($checkLinks)) {
-            
+            $insertCategories = isset($request->request->get('new_page_form')['categories']) 
+                    ? $request->request->get('new_page_form')['categories'] : '' ;
             $em->persist($page);
             $em->flush();
+            $em->getRepository('AdminBundle:Pages')->setCategories($page, $insertCategories);
 
             $this->addFlash(
                 'notice',
@@ -75,8 +77,7 @@ class AdminDashobardPagesController extends Controller
 
         }
         
-        
-        return $this->render('AdminBundle:AdminDashobard:dashboard-pages/page-single.html.twig', array(
+        return $this->render('AdminBundle:AdminDashobard:dashboard-pages/page-single-add-new.html.twig', array(
             'form' => $form->createView(),
             'pageTitle' => 'Tworzenie nowej strony'
         ));
@@ -86,21 +87,15 @@ class AdminDashobardPagesController extends Controller
     public function editPageAction(Request $request, $pageID)
     {
         $em = $this->getDoctrine()->getManager();
-            
         $pageRepository =  $em->getRepository('AdminBundle:Pages');
         $page = $pageRepository->find($pageID);
-                
         $pageRepository->assignCategories($page);
-        
-        $form = $this->createForm(NewPageForm::class, $page);
-        
+        $form = $this->createForm(EditPageForm::class, $page);
         $form->handleRequest($request);
         
-        
         if ($form->isSubmitted() && $form->isValid()) {
-            $insertCategories = isset($request->request->get('new_page_form')['categories']) 
-                    ? $request->request->get('new_page_form')['categories'] : '' ;
-            
+            $insertCategories = isset($request->request->get('edit_page_form')['categories']) 
+                    ? $request->request->get('edit_page_form')['categories'] : '' ;
             $pageRepository->setCategories($page, $insertCategories);
             $this->addFlash(
                 'notice',
@@ -112,7 +107,7 @@ class AdminDashobardPagesController extends Controller
             return $this->redirectToRoute('admin_pages_edit', array( 'pageID' => $pageID));
         }
         
-        return $this->render('AdminBundle:AdminDashobard:dashboard-pages/page-single.html.twig', array(
+        return $this->render('AdminBundle:AdminDashobard:dashboard-pages/page-single-edit.html.twig', array(
             'form' => $form->createView(),
             'page' => $page,
             'pageTitle' => 'Zarządzanie stroną'
@@ -129,10 +124,10 @@ class AdminDashobardPagesController extends Controller
         $em->remove($page);
         $em->flush();
         
-         $this->addFlash(
+        $this->addFlash(
                 'notice',
                 'Strona została usunięta!'
-               );
+            );
         
         return $this->redirectToRoute('admin_pages');
     }

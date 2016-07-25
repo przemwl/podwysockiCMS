@@ -1,24 +1,12 @@
-{% extends 'AdminBundle:AdminDashobard:dashboard-nav/leftNavigation.html.twig' %}
+{% extends 'AdminBundle:AdminDashobard:base.html.twig' %}
+
 
 {% block pageTitle %} Panel sterowania - strona główna {% endblock %}
-
 {% block bodyClass %} nav-md {% endblock %}
 
-    {% block container %}
-        <div class="container body">
-          <div class="main_container">
-            <div class="col-md-3 left_col">
-                {% block leftNavigation %}{{ parent() }}{% endblock %}
-            </div>
-            <!-- top navigation -->
-            <div class="top_nav">
-              {% block topNavigation %}{{ parent() }}{% endblock %}
-            </div>
-            <!-- /top navigation -->
 
-            <!-- page content -->
-            <div class="right_col" role="main">
-              <!-- top tiles -->
+{% block container %}
+       
               <div class="row tile_count">
                 <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
                   <span class="count_top"><i class="fa fa-user"></i> Total Users</span>
@@ -704,25 +692,6 @@
                           </div>
                         </div>
                       </div>
-
-                    </div>
-                    <!-- end of weather widget -->
-                  </div>
-                </div>
-              </div>
-            </div>
-            <!-- /page content -->
-
-            <!-- footer content -->
-            <footer>
-              <div class="pull-right">
-                Gentelella - Bootstrap Admin Template by <a href="https://colorlib.com">Colorlib</a>
-              </div>
-              <div class="clearfix"></div>
-            </footer>
-            <!-- /footer content -->
-          </div>
-        </div>
 
     {% endblock %}
 

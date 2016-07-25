@@ -1,0 +1,7 @@
+main_theme_homepage:
+    path:     /
+    defaults: { _controller: MainThemeBundle:Index:index }
+
+page_controller:
+    path:     /{page}
+    defaults: { _controller: MainThemeBundle:Index:page}

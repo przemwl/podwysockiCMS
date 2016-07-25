@@ -1,201 +1,102 @@
-{% extends 'AdminBundle:AdminDashobard:dashboard-nav/leftNavigation.html.twig' %}
-
-{% block stylesheets %}
-    {{ parent() }}
-
-    <!-- Include Editor style. -->
-    <link href="{{ asset('assets/vendor/froala/css/froala_editor.min.css') }}" rel="stylesheet" type="text/css" />
-    <link href="{{ asset('assets/vendor/froala/css/froala_style.min.css') }}" rel="stylesheet" type="text/css" />
-
-    <!-- Include Code Mirror style -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.3.0/codemirror.min.css">
-
-    <!-- Include Editor Plugins style. -->
-    <link rel="stylesheet" href="{{ asset('assets/vendor/froala/css/plugins/char_counter.css') }}">
-    <link rel="stylesheet" href="{{ asset('assets/vendor/froala/css/plugins/code_view.css') }}">
-    <link rel="stylesheet" href="{{ asset('assets/vendor/froala/css/plugins/colors.css') }}">
-    <link rel="stylesheet" href="{{ asset('assets/vendor/froala/css/plugins/emoticons.css') }}">
-    <link rel="stylesheet" href="{{ asset('assets/vendor/froala/css/plugins/file.css') }}">
-    <link rel="stylesheet" href="{{ asset('assets/vendor/froala/css/plugins/fullscreen.css') }}">
-    <link rel="stylesheet" href="{{ asset('assets/vendor/froala/css/plugins/image.css') }}">
-    <link rel="stylesheet" href="{{ asset('assets/vendor/froala/css/plugins/image_manager.css') }}">
-    <link rel="stylesheet" href="{{ asset('assets/vendor/froala/css/plugins/line_breaker.css') }}">
-    <link rel="stylesheet" href="{{ asset('assets/vendor/froala/css/plugins/quick_insert.css') }}">
-    <link rel="stylesheet" href="{{ asset('assets/vendor/froala/css/plugins/table.css') }}">
-    <link rel="stylesheet" href="{{ asset('assets/vendor/froala/css/plugins/video.css') }}">
-{% endblock %}
+{% extends 'AdminBundle:AdminDashobard:base.html.twig' %}
 
 
-{% block pageTitle %} Main Dashboard {% endblock %}
-
+{% block pageTitle %} Edycja kategorii {% endblock %}
 {% block bodyClass %} nav-md {% endblock %}
+{% block pageHeading %} Edytuj kategorię {% endblock %}
 
-    {% block container %}
-        
-       <div class="container body">
-          <div class="main_container">
-            <div class="col-md-3 left_col">
-                {% block leftNavigation %}{{ parent() }}{% endblock %}
+
+{% block container %}
+    
+    <div class="col-md-9 col-sm-9 col-xs-9 pull-left">
+
+        {{ form_start(form) }}
+
+        {% for flash_message in app.session.flashBag.get('notice') %}
+            <div class="flash-notice">
+                {{ flash_message }}
             </div>
-            <!-- top navigation -->
-            <div class="top_nav">
-              {% block topNavigation %}{{ parent() }}{% endblock %}
+        {% endfor %}  
+        {% for flash_message in app.session.flashBag.get('error') %}
+            <div class="flash-notice" style="color: red!important;">
+                {{ flash_message }}
             </div>
-            <!-- /top navigation -->
-            <!-- page content -->
-            <div class="right_col" role="main">
-               <h1 style="margin-top: 86px;"> <strong> Zarządzanie kategorią </strong> </h1>  
+        {% endfor %} 
+
+        <div class="x_panel tile">
+            <div class="form-group">
                 <div class="row">
-                     
-                    <div class="col-md-9 col-sm-9 col-xs-9 pull-left">
-                         {{ form_start(form) }}
-                            {% for flash_message in app.session.flashBag.get('notice') %}
-                                <div class="flash-notice">
-                                    {{ flash_message }}
-                                </div>
-                            {% endfor %}  
-                            {% for flash_message in app.session.flashBag.get('error') %}
-                                <div class="flash-notice" style="color: red!important;">
-                                    {{ flash_message }}
-                                </div>
-                            {% endfor %} 
-                        <div class="x_panel tile">
-                            
-                                <div class="form-group">
-                                    <div class="row">
-                                        <div class="pull-left col-md-9 col-sm-9 col-xs-9">
-                                            <h2 class="field-substitution">
-                                                <span class="disappearing-field"> 
-                                                    {% if category is defined %} 
-                                                        {{ category.categoryName }}  <a href="#" class="btn btn-transparent"> Zmień nazwę </a>
-                                                    {% else %}
-                                                        {{ form_widget(form.categoryName, {'attr': {'class': 'form-control'}}) }}
-                                                    {% endif %}
-                                                       </span>
-                                                <span class="editing-field"> 
-                                                   {% if category is defined %} {{ form_widget(form.categoryName, {'attr': {'class': 'form-control'}}) }} {% endif %}
-                                                </span>
-                                            </h2>
-                                            <div class="page-link">
-                                                <h5 class="field-substitution">
-                                                <span class="disappearing-field"> 
-                                                    {% if category is defined %} 
-                                                        Bezpośredni link: 
-                                                            <span class="link"> 
-                                                                <strong>
-                                                                    {{ app.request.getSchemeAndHttpHost() }}/{{ category.link }} 
-                                                                </strong> 
-                                                            </span>
-                                                            <a href="#" class="btn btn-transparent"> Edytuj </a>
-                                                    {% endif %}
-                                                       </span>
-                                                <span class="editing-field"> 
-                                                    {% if category is defined %} {{ form_widget(form.link, {'attr': {'class': 'form-control'}}) }} {% endif %}
-                                                </span>
-                                                </h5>
-                                            </div>
-                                        </div>
-                                        <div class="pull-right col-md-3 col-sm-3 col-xs-3">
-                                            <p class="text-right">
-                                                {% if category is defined%} 
-                                                    <a href="{{ path('admin_categories_remove',{ 'categoryID': category.id }) }}" class="btn btn-danger icon-inside icon-trash"> Usuń </a>
-                                                    <a href="{{ path('admin_categories_add_new') }}" class="btn btn-success icon-inside icon-plus"> Nowa kategoria </a>
-                                                {% endif %}
-                                                    
-                                            </p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                      {{ form_widget(form.categoryDescription, {'attr': {'class': 'form-control'}}) }}
-                                </div>
+                    <div class="pull-left col-md-9 col-sm-9 col-xs-9">
+                        <h2 class="field-substitution">
+                            <span class="disappearing-field"> 
+                                {% if category is defined %} 
+                                    {{ category.categoryName }}  <a href="#" class="btn btn-transparent"> Zmień nazwę </a>
+                                {% else %}
+                                    {{ form_widget(form.categoryName, {'attr': {'class': 'form-control'}}) }}
+                                {% endif %}
+                            </span>
+                            <span class="editing-field"> 
+                                {% if category is defined %} {{ form_widget(form.categoryName, {'attr': {'class': 'form-control'}}) }} {% endif %}
+                            </span>
+                        </h2>
+                        <div class="page-link">
+                            <h5 class="field-substitution">
+                                <span class="disappearing-field"> 
+                                    {% if category is defined %} 
+                                        Bezpośredni link: 
+                                        <span class="link"> 
+                                            <strong>
+                                                {{ app.request.getSchemeAndHttpHost() }}/{{ category.link }} 
+                                            </strong> 
+                                        </span>
+                                        <a href="#" class="btn btn-transparent"> Edytuj </a>
+                                    {% endif %}
+                                </span>
+                                <span class="editing-field"> 
+                                    {% if category is defined %} {{ form_widget(form.link, {'attr': {'class': 'form-control'}}) }} {% endif %}
+                                </span>
+                            </h5>
                         </div>
                     </div>
-                    <div class="col-md-3 col-sm-3 col-xs-3 pull-right">
-                        <div class="x_panel tile">
-                            <h2> Informacje <span class="i"> i </span></h2>
-                            <hr> <hr>
-                            {% if category is defined %}<p> Data opublikowania: <strong>  {{ category.published | date('Y-m-d G:i:s') }}  </strong> </p> {% endif %}
-                            <p> Rodzic: <strong> brak </strong> <a href="#" class="btn btn-transparent"> Edytuj </a> </p>
-
-                        </div>
-                    </div>
-                    <div class="col-md-9 col-sm-9 col-xs-9 pull-left">
-                        <p class="text-right"> 
-                            <a href="#" class="btn btn-transparent icon-inside icon-eye"> Podgląd </a>
-                            <a href="{{ path(app.request.attributes.get('_route'), app.request.attributes.get('_route_params')) }}" class="btn btn-danger icon-inside icon-refresh"> Anuluj </a>
-                            {{ form_widget(form.save, {'attr': {'class': 'btn btn-success icon-inside icon-accept'}}) }}
+                    <div class="pull-right col-md-3 col-sm-3 col-xs-3">
+                        <p class="text-right">
+                            {% if category is defined%} 
+                                <a href="{{ path('admin_categories_remove',{ 'categoryID': category.id }) }}" class="btn btn-danger icon-inside icon-trash"> Usuń </a>
+                                <a href="{{ path('admin_categories_add_new') }}" class="btn btn-success icon-inside icon-plus"> Nowa kategoria </a>
+                            {% endif %}                        
                         </p>
                     </div>
-                </div> <!-- /.row -->
-{#                {{ form_end(form) }}#}
-                {{ form_widget(form._token) }}
-                {{ form_end(form, {'render_rest': false}) }}
+                </div>
             </div>
-            <!-- /page content -->
-            <!-- footer content -->
-            <footer>
-              <div class="pull-right">
-                Gentelella - Bootstrap Admin Template by <a href="https://colorlib.com">Colorlib</a>
-              </div>
-              <div class="clearfix"></div>
-            </footer>
-            <!-- /footer content -->
-          </div>
+            <div class="form-group">
+                <h4> Opis kategorii </h4>
+                {{ form_widget(form.categoryDescription, {'attr': {'class': 'form-control'}}) }}
+            </div>
         </div>
-            
-    {% endblock %}
+    </div>
+    <div class="col-md-3 col-sm-3 col-xs-3 pull-right">
+        <div class="x_panel tile">
+            <h2> Informacje <span class="i"> i </span></h2>
+            <hr> <hr>
+            {% if category is defined %}<p> Data opublikowania: <strong>  {{ category.published | date('Y-m-d G:i:s') }}  </strong> </p> {% endif %}
+            <p> Rodzic: <strong> brak </strong> <a href="#" class="btn btn-transparent"> Edytuj </a> </p>
+        </div>
+    </div>
+    <div class="col-md-9 col-sm-9 col-xs-9 pull-left">
+        <p class="text-right"> 
+            <a href="#" class="btn btn-transparent icon-inside icon-eye"> Podgląd </a>
+            <a href="{{ path(app.request.attributes.get('_route'), app.request.attributes.get('_route_params')) }}" class="btn btn-danger icon-inside icon-refresh"> Anuluj </a>
+            {{ form_widget(form.save, {'attr': {'class': 'btn btn-success icon-inside icon-accept'}}) }}
+        </p>
+    </div>
+    {{ form_widget(form._token) }}
+    {{ form_end(form, {'render_rest': false}) }}
+
+{% endblock %}
     
     
     
-    {% block scripts %} 
-        {{ parent() }}
-        <script type="text/javascript" src="{{ asset('assets/AdminCustomScripts/main.js') }}"> </script>
-        <script type="text/javascript" src="{{ asset('assets/vendor/froala/js/froala_editor.min.js') }}"></script>
+{% block scripts %} 
+{{ parent() }}
 
-        <!-- Include Code Mirror. -->
-        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.3.0/codemirror.min.js"></script>
-        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.3.0/mode/xml/xml.min.js"></script>
-
-        <!-- Include Plugins. -->
-        <script type="text/javascript" src="{{ asset('assets/vendor/froala/js/plugins/align.min.js') }}"></script>
-        <script type="text/javascript" src="{{ asset('assets/vendor/froala/js/plugins/char_counter.min.js') }}"></script>
-        <script type="text/javascript" src="{{ asset('assets/vendor/froala/js/plugins/code_beautifier.min.js') }}"></script>
-        <script type="text/javascript" src="{{ asset('assets/vendor/froala/js/plugins/code_view.min.js') }}"></script>
-        <script type="text/javascript" src="{{ asset('assets/vendor/froala/js/plugins/colors.min.js') }}"></script>
-        <script type="text/javascript" src="{{ asset('assets/vendor/froala/js/plugins/emoticons.min.js') }}"></script>
-        <script type="text/javascript" src="{{ asset('assets/vendor/froala/js/plugins/entities.min.js') }}"></script>
-        <script type="text/javascript" src="{{ asset('assets/vendor/froala/js/plugins/file.min.js') }}"></script>
-        <script type="text/javascript" src="{{ asset('assets/vendor/froala/js/plugins/font_family.min.js') }}"></script>
-        <script type="text/javascript" src="{{ asset('assets/vendor/froala/js/plugins/font_size.min.js') }}"></script>
-        <script type="text/javascript" src="{{ asset('assets/vendor/froala/js/plugins/fullscreen.min.js') }}"></script>
-        <script type="text/javascript" src="{{ asset('assets/vendor/froala/js/plugins/image.min.js') }}"></script>
-        <script type="text/javascript" src="{{ asset('assets/vendor/froala/js/plugins/image_manager.min.js') }}"></script>
-        <script type="text/javascript" src="{{ asset('assets/vendor/froala/js/plugins/inline_style.min.js') }}"></script>
-        <script type="text/javascript" src="{{ asset('assets/vendor/froala/js/plugins/line_breaker.min.js') }}"></script>
-        <script type="text/javascript" src="{{ asset('assets/vendor/froala/js/plugins/link.min.js') }}"></script>
-        <script type="text/javascript" src="{{ asset('assets/vendor/froala/js/plugins/lists.min.js') }}"></script>
-        <script type="text/javascript" src="{{ asset('assets/vendor/froala/js/plugins/paragraph_format.min.js') }}"></script>
-        <script type="text/javascript" src="{{ asset('assets/vendor/froala/js/plugins/paragraph_style.min.js') }}"></script>
-        <script type="text/javascript" src="{{ asset('assets/vendor/froala/js/plugins/quick_insert.min.js') }}"></script>
-        <script type="text/javascript" src="{{ asset('assets/vendor/froala/js/plugins/quote.min.js') }}"></script>
-        <script type="text/javascript" src="{{ asset('assets/vendor/froala/js/plugins/table.min.js') }}"></script>
-        <script type="text/javascript" src="{{ asset('assets/vendor/froala/js/plugins/save.min.js') }}"></script>
-        <script type="text/javascript" src="{{ asset('assets/vendor/froala/js/plugins/url.min.js') }}"></script>
-        <script type="text/javascript" src="{{ asset('assets/vendor/froala/js/plugins/video.min.js') }}"></script>
-
-        <!-- Include Language file if we want to use it. -->
-        <script type="text/javascript" src="{{ asset('assets/vendor/froala/js/languages/ro.js') }}"></script>
-        
-        
-        <script>
-            $(function() {
-                $('#new_page_form_pageContent').froalaEditor({
-                   heightMin: 400 
-                });
-            });
-        </script>
-        
-        
-        
-    {% endblock %}
+{% endblock %}

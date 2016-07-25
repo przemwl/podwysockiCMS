@@ -1,137 +1,100 @@
-{% extends 'AdminBundle:AdminDashobard:dashboard-nav/leftNavigation.html.twig' %}
+{% extends 'AdminBundle:AdminDashobard:base.html.twig' %}
+
 
 {% block pageTitle %} Panel sterowania - strony {% endblock %}
-
 {% block bodyClass %} nav-md {% endblock %}
-
-    {% block container %}
-        
-       <div class="container body">
-          <div class="main_container">
-            <div class="col-md-3 left_col">
-                {% block leftNavigation %}{{ parent() }}{% endblock %}
-            </div>
-            <!-- top navigation -->
-            <div class="top_nav">
-              {% block topNavigation %}{{ parent() }}{% endblock %}
-            </div>
-            <!-- /top navigation -->
-
-            <!-- page content -->
-            <div class="right_col" role="main">
-                <div class="row">
-                    <div class="col-md-12 col-sm-12 col-xs-12">
-                        <h1 style="font-weight: bold;"> Twoje Strony </h1>
-                    </div>
-                </div>
-                
-                <div class="row">
-                    <div class="col-md-12 col-sm-12 col-xs-12">
-                        
-                        <div class="panel">
-                            {% for flash_message in app.session.flashBag.get('notice') %}
-                                <div class="flash-notice">
-                                    {{ flash_message }}
-                                </div>
-                            {% endfor %}
-                            <div class="row">
-                                <div class="pull-right col-md-12 col-sm-12 col-xs-12">
-                                    <p class="text-right">
-                                        <a href="{{ path('admin_pages_add_new') }}" class="btn btn-success icon-inside icon-plus"> Nowa strona </a>
-                                    </p>
-                                </div>
-                            </div>
-                            <form action="{{ path('admin_pages_bulk_action') }}" method="POST">
-                                
-                                <div class="bulk actions">
-                                    <ul class="stats-overview">
-                                        <li> Liczba zaznaczonych stron : <br/> <strong class="selected-pages-counter"> 0 </strong> </li>
-                                        <li> 
-                                            <div class="btn-group">
-                                              <div class="form-group">
-                                                  <select class="form-control" name="action" required>
-                                                    <option value=""> Wybierz działanie masowe</option>
-                                                    <option value="delete"> Usuń zaznaczone </option>
-                                                    <option value="duplicate"> Duplikuj zaznaczone </option>
-                                                  </select>
-                                              </div>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div class="btn-group">
-                                                <input type="submit" value="Wykonaj działania masowe" class="btn btn-primary" />
-                                            </div>
-                                        </li>
-                                    </ul>
-                                </div>
-                                <div class="table-responsive">
-                                        <table class="table table-striped jambo_table bulk_action">
-                                          <thead>
-                                            <tr class="headings">
-                                              <th class="column-title" style="display: table-cell;"> ID strony </th>
-                                              <th class="column-title" style="display: table-cell;"> Checkbox </th>
-                                              <th class="column-title" style="display: table-cell;"> Tytuł strony </th>
-                                              <th class="column-title" style="display: table-cell;"> Bezpośredni Link </th>
-                                              <th class="column-title" style="display: table-cell;"> Widoczność </th>
-                                              <th class="column-title" style="display: table-cell;"> Data publikacji </th>
-                                              <th class="column-title" style="display: table-cell;"> Autor </th>
-                                              <th class="column-title" style="display: table-cell;"> Akcje </th>
-                                            </tr>
-                                          </thead>
-
-                                          <tbody>
-
-                                            {% if pages is empty %} 
-                                                <tr>
-                                                    <td> Na razie nie ma jeszcze dodanych żadnych stron... </td>
-                                                </tr>
-                                            {% endif %}
+{% block pageHeading %} Twoje strony {% endblock %}
 
 
-                                            {% set counter = 1 %}
-                                            {% for page in pages %}
-
-                                                <tr class="{% if counter is odd %} odd {% else %} even {% endif %} pointer">
-
-                                                    <td> {{ page.id }} </td>
-                                                    <td> <input type="checkbox" name="bulkIDs[]" value="{{ page.id }}"/> </td>
-                                                    <td> <h4 style="font-weight: bold"> <a href="{{ path('admin_pages_edit', { 'pageID': page.id }) }}"> {{ page.pageTitle }} </a> </h4> </td>
-                                                    <td>   {{ app.request.getSchemeAndHttpHost() }}/<strong>{{ page.link }} </strong> </td>
-                                                    <td> {{ page.visibility }} </td>
-                                                    <td> {{ page.published | date('Y-m-d') }} </td>
-                                                    <td> AUTOR </td>
-                                                    <td class="last">
-                                                        <a href="{{ path('admin_pages_edit', { 'pageID': page.id }) }}" class="btn btn-success"> Zarządzaj stroną </a>
-                                                        <a href="{{ path('admin_pages_remove', { 'pageID': page.id }) }}" class="btn btn-danger"> Usuń </a>
-                                                        <a href="{{ path('admin_pages_duplicate', { 'pageID': page.id }) }}" class="btn btn-primary"> Duplikuj </a>
-                                                    </td>
-
-                                                </tr>
-                                             {% set counter = counter + 1 %} 
-                                            {% endfor %} 
-
-
-                                            </tr>
-                                          </tbody>
-                                        </table>
-                                  </div>
-                            </form>
-                            
-                        </div>
-                        
-                    </div> <!-- /.col-md-12.col-sm-12.col-xs-12 -->
-                </div> <!-- /.row -->
-            </div>
-            <!-- /page content -->
-            <!-- footer content -->
-            <footer>
-              <div class="pull-right">
-                Gentelella - Bootstrap Admin Template by <a href="https://colorlib.com">Colorlib</a>
-              </div>
-              <div class="clearfix"></div>
-            </footer>
-            <!-- /footer content -->
-          </div>
+{% block container %}
+    
+    {% for flash_message in app.session.flashBag.get('notice') %}
+        <div class="flash-notice">
+            {{ flash_message }}
         </div>
+    {% endfor %}
+    
+    
+    <div class="row">
+        <div class="pull-right col-md-12 col-sm-12 col-xs-12">
+            <p class="text-right">
+                <a href="{{ path('admin_pages_add_new') }}" class="btn btn-success icon-inside icon-plus"> Nowa strona </a>
+            </p>
+        </div>
+    </div>
+            
+            
+    <form action="{{ path('admin_pages_bulk_action') }}" method="POST">
+        
+        <div class="bulk actions">
+            <ul class="stats-overview">
+                <li> Liczba zaznaczonych stron : <br/> <strong class="selected-pages-counter"> 0 </strong> </li>
+                <li> 
+                    <div class="btn-group">
+                      <div class="form-group">
+                          <select class="form-control" name="action" required>
+                            <option value=""> Wybierz działanie masowe</option>
+                            <option value="delete"> Usuń zaznaczone </option>
+                            <option value="duplicate"> Duplikuj zaznaczone </option>
+                          </select>
+                      </div>
+                    </div>
+                </li>
+                <li>
+                    <div class="btn-group">
+                        <input type="submit" value="Wykonaj działania masowe" class="btn btn-primary" />
+                    </div>
+                </li>
+            </ul>
+        </div>
+        <div class="table-responsive">
+            <table class="table table-striped jambo_table bulk_action">
+                <thead>
+                    <tr class="headings">
+                        <th class="column-title" style="display: table-cell;"> ID strony </th>
+                        <th class="column-title" style="display: table-cell;"> Checkbox </th>
+                        <th class="column-title" style="display: table-cell;"> Tytuł strony </th>
+                        <th class="column-title" style="display: table-cell;"> Bezpośredni Link </th>
+                        <th class="column-title" style="display: table-cell;"> Widoczność </th>
+                        <th class="column-title" style="display: table-cell;"> Data publikacji </th>
+                        <th class="column-title" style="display: table-cell;"> Autor </th>
+                        <th class="column-title" style="display: table-cell;"> Akcje </th>
+                    </tr>
+                </thead>
+              
+                <tbody>
+                    {% if pages is empty %} 
+                        <tr>
+                            <td> Na razie nie ma jeszcze dodanych żadnych stron... </td>
+                        </tr>
+                    {% endif %}
 
-    {% endblock %}
+                    {% set counter = 1 %}
+                    {% for page in pages %}
+                        
+                        <tr class="{% if counter is odd %} odd {% else %} even {% endif %} pointer">
+                            
+                            <td> {{ page.id }} </td>
+                            <td> <input type="checkbox" name="bulkIDs[]" value="{{ page.id }}"/> </td>
+                            <td> <h4 style="font-weight: bold"> <a href="{{ path('admin_pages_edit', { 'pageID': page.id }) }}"> {{ page.pageTitle }} </a> </h4> </td>
+                            <td>   {{ app.request.getSchemeAndHttpHost() }}/<strong>{{ page.link }} </strong> </td>
+                            <td> {{ page.visibility }} </td>
+                            <td> {{ page.published | date('Y-m-d') }} </td>
+                            <td> AUTOR </td>
+                            <td class="last">
+                                <a href="{{ path('admin_pages_edit', { 'pageID': page.id }) }}" class="btn btn-success"> Zarządzaj stroną </a>
+                                <a href="{{ path('admin_pages_remove', { 'pageID': page.id }) }}" class="btn btn-danger"> Usuń </a>
+                                <a href="{{ path('admin_pages_duplicate', { 'pageID': page.id }) }}" class="btn btn-primary"> Duplikuj </a>
+                            </td>
+                            
+                        </tr>
+                        
+                        {% set counter = counter + 1 %} 
+                    {% endfor %} 
+                </tbody>
+            </table>
+        </div>
+                
+    </form>
+                
+{% endblock %}
