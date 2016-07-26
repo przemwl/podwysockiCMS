@@ -26,4 +26,10 @@ class IndexController extends Controller
             'page' => $page[0]
         ));
     }
+    
+    public function categorySingleAction($categoryName)
+    {
+        $page = $this->getDoctrine()
+                ->getRepository('AdminBundle:Pages')->findBy(array('link' => $page));
+    }
 }

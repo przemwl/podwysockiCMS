@@ -14,6 +14,10 @@ admin_pages_remove:
     path:     /admin/pages/remove/{pageID}
     defaults: { _controller: AdminBundle:AdminDashobardPages:removePage }
 
+admin_pages_upload_image:
+    path:     /admin/pages/uploadImage
+    defaults: { _controller: AdminBundle:AdminDashobardPages:uploadImage }
+
 admin_pages_duplicate:
     path:     /admin/pages/duplicate/{pageID}
     defaults: { _controller: AdminBundle:AdminDashobardPages:duplicatePage }
@@ -21,3 +25,4 @@ admin_pages_duplicate:
 admin_pages_bulk_action:
     path:     /admin/pages/bulkAction
     defaults: { _controller: AdminBundle:AdminDashobardPages:bulk }
+    

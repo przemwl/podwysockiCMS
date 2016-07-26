@@ -1,10 +1,30 @@
-{% extends 'AdminBundle:AdminDashobard:base.html.twig' %}
-
-{% block pageTitle %} {% endblock %}
-
-{% block bodyClass %} login {% endblock %}
-
-{% block navMenu %} {% endblock %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="shortcut icon" href="{{ asset('images/pd-favicon.png') }}">
+    {% block stylesheets %}
+        <!-- jQuery -->
+        <script src="{{ asset('assets/vendor/jQuery/jquery.min.js') }}"> </script>
+        <link href="{{ asset('assets/vendor/bootstrap/src/bootstrap.min.css') }}" rel="stylesheet">
+        <!-- Font Awesome -->
+        <link href="{{ asset('assets/vendor/font-awesome/css/font-awesome.min.css') }}" rel="stylesheet">
+        <!-- Animate.css -->
+        <link href="{{ asset('assets/vendor/animate.css/animate.min.css') }}" rel="stylesheet">
+        <!-- iCheck -->
+        <link href="{{ asset('assets/vendor/iCheck/skins/flat/_all.css') }}" rel="stylesheet"> 
+        <!-- Custom Theme Style -->
+        <link href="{{ asset('assets/vendor/build/custom.min.css') }}" rel="stylesheet">
+        <link href="{{ asset('assets/AdminCustomStyles/css/main_styles.min.css') }}" rel="stylesheet">
+    {% endblock %}
+        <title> {% block pageTitle %} {% endblock %} </title>
+    </head>
+    
+<body class="{% block bodyClass %} login {% endblock %}">
+   
 
     {% block container %} 
     {% if error %}

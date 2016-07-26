@@ -4,11 +4,13 @@ namespace PodwysockiCMS\AdminBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use PodwysockiCMS\AdminBundle\Helpers\LinkValidator;
+
+
 /**
  * Categories
  *
  * @ORM\Table(name="categories", uniqueConstraints={@ORM\UniqueConstraint(name="UNIQ_3AF34668D5B80441", columns={"category_name"})})
- * @ORM\Entity(repositoryClass="PodwysockiCMS\AdminBundle\Entity\CategoriesRepository")
+ * @ORM\Entity(repositoryClass="PodwysockiCMS\AdminBundle\Entity\Repositories\CategoriesRepository")
  */
 class Categories
 {

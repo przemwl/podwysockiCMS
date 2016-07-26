@@ -5,3 +5,7 @@ main_theme_homepage:
 page_controller:
     path:     /{page}
     defaults: { _controller: MainThemeBundle:Index:page}
+    
+page_controller:
+    path:     /kategoria/{categoryName}
+    defaults: { _controller: MainThemeBundle:Index:categorySingle}

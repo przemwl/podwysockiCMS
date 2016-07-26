@@ -3,13 +3,12 @@
 namespace PodwysockiCMS\AdminBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use PodwysockiCMS\AdminBundle\Entity\Pages;
 use PodwysockiCMS\AdminBundle\Helpers\LinkValidator;
 use PodwysockiCMS\AdminBundle\Forms\NewPageForm;
 use PodwysockiCMS\AdminBundle\Forms\EditPageForm;
-
+use Symfony\Component\HttpFoundation\Response;
 
 class AdminDashobardPagesController extends Controller
 {
@@ -151,6 +150,40 @@ class AdminDashobardPagesController extends Controller
     }
     
     
+    public function uploadImageAction(Request $request)
+    {
+        $allowedExtensions = array(
+            'png',
+            'jpg', 
+            'jpeg',
+        );
+        
+        $file = $request->files->get('file');
+       
+        if(false === array_search($file->guessExtension(),$allowedExtensions)) {
+            throw new Exception('Invalid file extension');
+        }
+        
+        $fileName = md5(uniqid()).'.'.$file->guessExtension();
+        $dateTime = new \DateTime();
+        
+        $dir = 'uploads/' . $dateTime->format('Y') . '/' . $dateTime->format('m') . '/';
+        
+        $file->move(
+                $dir,
+                $fileName
+            );
+        
+        
+        $response = new \StdClass();
+        $response->link = '/' . $dir . $fileName;
+        
+       return new Response(stripslashes(json_encode($response)));
+        
+    }
+    
+    
+    
     public function bulkAction(Request $request)    
     {
         $action = $request->request->get('action');
@@ -234,5 +267,5 @@ class AdminDashobardPagesController extends Controller
         }
         return $newString;
     }
-      
+    
 }

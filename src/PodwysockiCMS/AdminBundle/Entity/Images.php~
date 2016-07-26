@@ -1,0 +1,50 @@
+<?php
+
+namespace PodwysockiCMS\AdminBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+
+
+
+
+/**
+ * Pages
+ *
+ * @ORM\Table(name="images")
+ * @ORM\Entity
+ */
+
+class Images 
+{
+  /**
+   * @var integer
+   *
+   * @ORM\Column(name="id", type="integer", nullable=false)
+   * @ORM\Id
+   * @ORM\GeneratedValue(strategy="IDENTITY")
+   */
+   private $id;
+   
+  /**
+   * @var string
+   * @Assert\NotBlank()
+   * @ORM\Column(name="image_url", type="string", length=255)
+   */  
+   private $url;
+   
+   
+  /**
+   * @var string
+   * @Assert\NotBlank()
+   * @ORM\Column(name="image_title", type="string", length=255)
+   */    
+   private $title;
+   
+  /**
+   * @var string
+   * @ORM\Column(name="image_alt", type="string", length=255)
+   */  
+   private $alt;
+   
+}

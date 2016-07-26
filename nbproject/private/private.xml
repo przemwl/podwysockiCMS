@@ -13,10 +13,15 @@
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
             <file>file:/var/www/html/podwysockiCMS/src/PodwysockiCMS/AdminBundle/Controller/AdminDashobardPagesController.php</file>
-            <file>file:/var/www/html/podwysockiCMS/src/PodwysockiCMS/MainThemeBundle/Resources/views/Index/page.html.twig</file>
-            <file>file:/var/www/html/podwysockiCMS/src/PodwysockiCMS/MainThemeBundle/Resources/config/routing.yml</file>
+            <file>file:/var/www/html/podwysockiCMS/src/PodwysockiCMS/AdminBundle/Resources/views/AdminDashobard/dashboard-pages/page-single-edit.html.twig</file>
+            <file>file:/var/www/html/podwysockiCMS/src/PodwysockiCMS/AdminBundle/Resources/views/AdminDashobard/dashboard-pages/page-list.html.twig</file>
+            <file>file:/var/www/html/podwysockiCMS/src/PodwysockiCMS/AdminBundle/Forms/EditPageForm.php</file>
+            <file>file:/var/www/html/podwysockiCMS/src/PodwysockiCMS/AdminBundle/Resources/views/AdminDashobard/base.html.twig</file>
+            <file>file:/var/www/html/podwysockiCMS/src/PodwysockiCMS/AdminBundle/Resources/views/AdminDashobard/dashboard-pages/page-single-add-new.html.twig</file>
             <file>file:/var/www/html/podwysockiCMS/src/PodwysockiCMS/AdminBundle/Forms/NewPageForm.php</file>
-            <file>file:/var/www/html/podwysockiCMS/src/PodwysockiCMS/MainThemeBundle/Controller/IndexController.php</file>
+            <file>file:/var/www/html/podwysockiCMS/src/PodwysockiCMS/AdminBundle/Forms/NewCategoryForm.php</file>
+            <file>file:/var/www/html/podwysockiCMS/src/PodwysockiCMS/AdminBundle/Entity/PagesRepository.php</file>
+            <file>file:/var/www/html/podwysockiCMS/app/config/routing.yml</file>
         </group>
     </open-files>
 </project-private>

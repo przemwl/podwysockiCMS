@@ -193,7 +193,12 @@
 <script>
 $(function() {
     $('#edit_page_form_pageContent').froalaEditor({
-       heightMin: 400 
+        heightMin: 400,
+        imageUploadMethod: 'POST',
+        imageUploadParams: {
+                id: 'my_editor'
+        },
+        imageUploadURL: '/app_dev.php/admin/pages/uploadImage'
     });
 });
 </script>

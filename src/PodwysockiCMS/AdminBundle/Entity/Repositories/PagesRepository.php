@@ -1,6 +1,8 @@
 <?php
 
-namespace PodwysockiCMS\AdminBundle\Entity;
+namespace PodwysockiCMS\AdminBundle\Entity\Repositories;
+
+use PodwysockiCMS\AdminBundle\Entity\Pages;
 
 class PagesRepository extends \Doctrine\ORM\EntityRepository
 {
